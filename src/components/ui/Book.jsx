@@ -2,13 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
 const Book = ({ book }) => {
-    const rating = 4;
-
   return (
     <div className="book">
       <a href="">
         <figure className="book__img--wrapper">
-          <img src={book.url} alt="" className="book" />
+          <img src={book.url} alt="" className="book__img" />
         </figure>
       </a>
       <div className="book__title">
@@ -19,7 +17,17 @@ const Book = ({ book }) => {
       <div className="book__ratings">
         {
             // underscore "_" element = "useless" element
-            new Array(5).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index}/>)
+            // key index only required when mapping arrays
+            new Array(Math.floor(book.rating)).fill(0).map((_, index) => <FontAwesomeIcon icon="star" key={index}/>)
+        }
+        {
+            // if book rating is integer, do nothing. otherwise, print half star
+            // Number.isInteger(book.rating) ? '' : <FontAwesomeIcon icon="star-half-alt"/>
+
+            // if first condition = true, then render and display half stars onto paeg
+            // if first condition = false, render nothing.
+            // if number is not integer, then print half star. 
+            !Number.isInteger(book.rating) && <FontAwesomeIcon icon="star-half-alt"/>
         }
       </div>
       <div className="book__price">
