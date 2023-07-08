@@ -25,12 +25,22 @@ const Books = ({ books: initialBooks }) => {
           .slice()
           .sort(
             (a, b) =>
-              (b.salcePrice || b.originalPrice) -
+              (b.salePrice || b.originalPrice) -
               (a.salePrice - a.originalPrice)
           )
       );
     }
-    if 
+    if (filter === "RATING") {
+      setBooks(
+        // cant mutate books without setBooks state
+        books
+        .slice()
+        .sort(
+          (a, b) =>
+          (a.rating < b.rating)
+        )
+      )
+    }
   }
   return (
     <div id="books__body">
