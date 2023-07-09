@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Rating from "../components/ui/Rating";
 import Price from "../components/ui/Price";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import Book from "../components/ui/Book";
 
 const BookInfo = ({ books }) => {
   // React Router --> useParams() = allows you to take book.id value
@@ -65,6 +66,16 @@ const BookInfo = ({ books }) => {
           <div className="row">
             <div className="book__selected--top">
               <h2 className="book__selected--title--top">Recommended Books</h2>
+            </div>
+            <div className="books">
+            {books
+            // adding "+"'s will re-render the page upon clicking a book
+            // recommend books are swapped out because they are being filtered
+            .filter(book => book.rating === 5 && +book.id !== +id )
+            .slice(0,4)
+            // mapping an array to prevent changes on original data
+            .map(book => <Book book={book} key={book.id} />)
+            }
             </div>
           </div>
         </div>
