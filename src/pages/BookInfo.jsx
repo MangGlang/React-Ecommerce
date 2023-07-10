@@ -1,17 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Rating from "../components/ui/Rating";
 import Price from "../components/ui/Price";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import Book from "../components/ui/Book";
 
-const BookInfo = ({ books }) => {
+const BookInfo = ({ books, addToCart, cart }) => {
   // React Router --> useParams() = allows you to take book.id value
   // Destruct "id" to target main value
   const { id } = useParams();
   //   "+" before variables = makes variable an integer in JS
   const book = books.find((book) => +book.id === +id);
+
+  function addBookToCart(book) {
+    addToCart(book);
+  }
+
+  function bookExistsOnCart() {
+    return cart.find(book => book.id === +id);
+  }
 
   return (
     <div id="books__body">
@@ -28,19 +36,16 @@ const BookInfo = ({ books }) => {
             </div>
             <div className="book__selected">
               <figure className="book__selected--figure">
-                <img
-                  src={book.url}
-                  alt=""
-                  className="book__selected--img"
-                />
+                <img src={book.url} alt="" className="book__selected--img" />
               </figure>
               <div className="book__selected--description">
-                <h2 className="book__selected--title">
-                  {book.title}
-                </h2>
+                <h2 className="book__selected--title">{book.title}</h2>
                 <Rating rating={book.rating} />
                 <div className="book__selected--price">
-                  <Price originalPrice={book.originalPrice} salePrice={book.salePrice} />
+                  <Price
+                    originalPrice={book.originalPrice}
+                    salePrice={book.salePrice}
+                  />
                 </div>
                 <div className="book__summary">
                   <h3 className="book__summary--title">Summary</h3>
@@ -57,7 +62,20 @@ const BookInfo = ({ books }) => {
                     totam minus, voluptate veniam excepturi sequi! Repudiandae.
                   </p>
                 </div>
-                <button className="btn">Add to cart</button>
+                {
+                  bookExistsOnCart() ? (
+                    <Link to={`/cart`} className="book__link">
+                      <button className="btn">Checkout</button>
+                    </Link>
+                  ) : (
+                    <button className="btn" onClick={() => addBookToCart(book)}
+                    >
+                      Add to cart
+                    </button>
+                  )
+                  // if book exists on cart, "Checkout" button is displayed;
+                  //otherwise, "Add to Cart" button is displayed
+                }
               </div>
             </div>
           </div>
@@ -68,14 +86,15 @@ const BookInfo = ({ books }) => {
               <h2 className="book__selected--title--top">Recommended Books</h2>
             </div>
             <div className="books">
-            {books
-            // adding "+"'s will re-render the page upon clicking a book
-            // recommend books are swapped out because they are being filtered
-            .filter(book => book.rating === 5 && +book.id !== +id )
-            .slice(0,4)
-            // mapping an array to prevent changes on original data
-            .map(book => <Book book={book} key={book.id} />)
-            }
+              {books
+                // adding "+"'s will re-render the page upon clicking a book
+                // recommend books are swapped out because they are being filtered
+                .filter((book) => book.rating === 5 && +book.id !== +id)
+                .slice(0, 4)
+                // mapping an array to prevent changes on original data
+                .map((book) => (
+                  <Book book={book} key={book.id} />
+                ))}
             </div>
           </div>
         </div>
