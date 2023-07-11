@@ -28,7 +28,7 @@ const Cart = ({ cart, changeQuantity, removeBook }) => {
                 {/* For every item in cart, we want to add new cart item */}
                 {cart.map((book) => {
                   return (
-                    <div className="cart__item">
+                    <div className="cart__item" key={book.id}>
                       <div className="cart__book">
                         <img
                           src={book.url}

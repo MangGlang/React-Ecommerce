@@ -50,6 +50,14 @@ function App() {
     setCart(cart.filter(book => book.id !== item.id))
   }
 
+  function numberOfItems() {
+    let counter = 0;
+    cart.forEach(item => {
+      counter += item.quantity;
+    })
+    return counter;
+  }
+
   // whenever cart changes, console log
   useEffect(() => {
     console.log(cart);
@@ -58,7 +66,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Nav />
+        <Nav numberOfItems={numberOfItems()}/>
 
         <Route path="/" exact component={Home} />
         <Route path="/books" exact render={() => <Books books={books} />} />
