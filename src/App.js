@@ -41,6 +41,15 @@ function App() {
     );
   }
 
+  // On click, remove 1 quantity of book
+  // to target quantity of book
+  function removeBook(item) {
+    // splice id of book retrieved from array?
+    console.log('remove item');
+    // Keep item of id in cart if value of id is not the same.
+    setCart(cart.filter(book => book.id !== item.id))
+  }
+
   // whenever cart changes, console log
   useEffect(() => {
     console.log(cart);
@@ -63,7 +72,7 @@ function App() {
         <Route
           path="/cart"
           render={() => (
-            <Cart books={books} cart={cart} changeQuantity={changeQuantity} />
+            <Cart books={books} cart={cart} changeQuantity={changeQuantity} removeBook={removeBook}/>
           )}
         />
         {/* when changeQuantity value is changed in cart, then execute command: console log  */}

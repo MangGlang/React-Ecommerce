@@ -1,7 +1,6 @@
 import React from "react";
 
-const Cart = ( { cart, changeQuantity }) => {
-
+const Cart = ( { cart, changeQuantity, removeBook }) => {
 
   const total = () => {
     let price = 0;
@@ -41,7 +40,10 @@ const Cart = ( { cart, changeQuantity }) => {
                             {book.title}
                           </span>
                           <span className="cart__book--price">${(book.salePrice || book.originalPrice).toFixed(2)}</span>
-                          <button className="cart__book--remove">Remove</button>
+                          <button className="cart__book--remove" onClick={() => removeBook(book)}>Remove</button>
+{/* On click, remove all book properties from cart */}
+{/* By removing a certain book (all of its quantities), price should be updated automatically */}
+{/* Target book by targetting quantity value */}
                         </div>
                       </div>
                       <div className="cart__quantity">
