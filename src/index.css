@@ -398,7 +398,7 @@ FEATURES
 
 .skeleton {
   background-color: rgb(227, 227, 227) !important;
-  margin-bottom: 8px;
+  /* margin-bottom: 8px; */
 }
 
 .book__title--skeleton {
@@ -418,7 +418,7 @@ FEATURES
 }
 
 .book__link {
-  color: #242424;
+color: red;
 }
 
 .book__img--wrapper {
